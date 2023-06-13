@@ -1,15 +1,23 @@
+// Icon
 const menuEmail = document.querySelector(".navbar-email");
 const menuHamIcon = document.querySelector(".menu");
 const menuCarritoIcon = document.querySelector(".navbar-shopping-cart");
+const productDetailCloseIcon = document.querySelector(".product-detail-close");
+
+// querySelectors
 const desktopMenu = document.querySelector(".desktop-menu");
 const mobileMenu = document.querySelector(".mobile-menu");
 const shoppingCartContainer = document.querySelector("#shoppingCartContainer");
+const productDetailContainer = document.querySelector("#productDetail");
 const cardsContainer = document.querySelector(".cards-container");
 
+//addEventListener
 menuEmail.addEventListener("click", toggleDesktopMenu);
 menuHamIcon.addEventListener("click", toggleMobileMenu);
 menuCarritoIcon.addEventListener("click", toggleCarritoAside);
+productDetailCloseIcon.addEventListener("click", closeProductDetailAside);
 
+//function
 function toggleDesktopMenu() {
   const isAsideClosed = shoppingCartContainer.classList.contains("inactive");
 
@@ -32,15 +40,48 @@ function toggleMobileMenu() {
 function toggleCarritoAside() {
   const isMobileMenuClosed = mobileMenu.classList.contains("inactive");
   const isDesktopMenuClosed = desktopMenu.classList.contains("inactive");
+  const isProductDetailClosed =
+    productDetailContainer.classList.contains("inactive");
 
   if (!isMobileMenuClosed) {
     mobileMenu.classList.add("inactive");
   } else if (!isDesktopMenuClosed) {
     desktopMenu.classList.toggle("inactive");
   }
+
+  if (!isProductDetailClosed) {
+    productDetailContainer.classList.add("inactive");
+  }
+
   shoppingCartContainer.classList.toggle("inactive");
 }
+
+function openProductDetailAside() {
+  shoppingCartContainer.classList.add("inactive");
+  productDetailContainer.classList.remove("inactive");
+}
+function closeProductDetailAside() {
+  productDetailContainer.classList.add("inactive");
+}
+
 const productList = []; // array que nos devolveria nuestro propio cod JS cuando hicieramos las consultas
+productList.push({
+  name: "Bike",
+  price: 120,
+  image:
+    "https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+});
+productList.push({
+  name: "Tractor",
+  price: 700,
+  image:
+    "https://images.pexels.com/photos/162639/digger-machine-machinery-construction-162639.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+});
+productList.push({
+  name: "Telephone",
+  price: 60,
+  image: "https://images.pexels.com/photos/209695/pexels-photo-209695.jpeg",
+});
 productList.push({
   name: "Bike",
   price: 120,
@@ -66,6 +107,7 @@ function renderProducts(arr) {
 
     const productImg = document.createElement("img");
     productImg.setAttribute("src", product.image);
+    productImg.addEventListener("click", openProductDetailAside);
 
     const productInfo = document.createElement("div");
     productInfo.classList.add("product-info");
